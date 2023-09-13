@@ -1,4 +1,5 @@
 <?php
+require 'cetak.php';
 // pengecekan ajax request untuk mencegah direct access file, agar file tidak bisa diakses secara langsung dari browser
 // jika ada ajax request
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
@@ -35,5 +36,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     if ($insert) {
         // tampilkan pesan sukses insert data
         echo "Sukses";
+        
+        // Cetak antrian
+        cetak ($no_antrian);
     }
 }
