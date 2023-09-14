@@ -8,16 +8,14 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     // ambil tanggal sekarang
     $tanggal = gmdate("Y-m-d", time() + 60 * 60 * 7);
 
-    // sql statement untuk menampilkan data dari tabel "tbl_antrian" berdasarkan "tanggal"
-    $query = mysqli_query($mysqli, "SELECT id, no_antrian, status FROM tbl_antrian WHERE tanggal='$tanggal'")
-                                    or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
+    // sql statement untuk menampilkan data dari tabel "queue_antrian_admisi" berdasarkan "tanggal"
+    $query = mysqli_query($mysqli, "SELECT id, no_antrian, status FROM queue_antrian_admisi WHERE tanggal='$tanggal'") or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
     // ambil jumlah baris data hasil query
     $rows = mysqli_num_rows($query);
 
     // cek hasil query
     // jika data ada
     if ($rows <> 0) {
-        $response         = array();
         $response["data"] = array();
 
         // ambil data hasil query
@@ -34,7 +32,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     }
     // jika data tidak ada
     else {
-        $response         = array();
         $response["data"] = array();
 
         // buat data kosong untuk ditampilkan

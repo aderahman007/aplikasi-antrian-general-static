@@ -62,7 +62,7 @@
     <footer class="footer mt-auto py-4">
         <div class="container">
             <!-- copyright -->
-            <div class="copyright text-center mb-2 mb-md-0">&copy; <?php date('Y') ?> - <a href="https://adeofficial.com" target="_blank" class="text-brand text-decoration-none">Ade Official</a>. All rights reserved.
+            <div class="copyright text-center mb-2 mb-md-0">&copy; <?php date('Y') ?> - <a href="https://paperlesshospital.id" target="_blank" class="text-brand text-decoration-none">paperlesshospital.id</a>. All rights reserved.
             </div>
         </div>
     </footer>
@@ -88,7 +88,16 @@
                         // jika berhasil
                         if (result === 'Sukses') {
                             // tampilkan jumlah antrian
-                            $('#antrian').load('get_antrian.php').fadeIn('slow');
+                            $.get("get_antrian.php", function(data, status) {
+                                $('#antrian').html(data).fadeIn('slow');
+                            });
+                        } else if (result.includes('Sukses')) {
+                            $.get("get_antrian.php", function(data, status) {
+                                $('#antrian').html(data).fadeIn('slow');
+                                alert("Antrian anda " + data + " berhasil di ambil, tapi printer bermasalah!");
+                            });
+                        } else {
+                            alert("Eits ada masalah nih, hubungi IT Support yaa!");
                         }
                     },
                 });

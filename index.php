@@ -66,7 +66,7 @@
                             </div>
                             <h3>Panggilan Antrian</h3>
                             <p class="mb-5">Halaman Panggilan Antrian digunakan petugas loket untuk memanggil antrian.</p>
-                            <a href="pages/panggilan" class="btn btn-success rounded-pill px-4 py-2">
+                            <a href="javascript:;" class="btn btn-success rounded-pill px-4 py-2" data-bs-toggle="modal" data-bs-target="#panggilAntrian">
                                 Tampilkan <i class="bi-arrow-right ms-2"></i>
                             </a>
                         </div>
@@ -107,6 +107,30 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="panggilAntrian" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="panggilAntrianLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="panggilAntrianLabel">Pilih Loket Antrian</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-select" id="loketAntrian">
+                            <option value="" selected>Pilih Loket Antrian</option>
+                            <option value="1">Loket 1</option>
+                            <option value="2">Loket 2</option>
+                            <option value="3">Loket 3</option>
+                            <option value="4">Loket 4</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary tampilAntrian">Tampilkan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -118,11 +142,32 @@
         </div>
     </footer>
 
+    <!-- jQuery Core -->
+    <script src="assets/vendor/js/jquery-3.6.0.min.js" type="text/javascript"></script>
+
     <!-- Popper and Bootstrap JS -->
     <script src="assets/vendor/js/popper.min.js" type="text/javascript"></script>
 
     <!-- Bootstrap JS -->
     <script src="assets/vendor/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script>
+        $('.tampilAntrian').click(function(data) {
+            let localLoket = localStorage.getItem("_loket");
+
+            if (localLoket != null) {
+                localStorage.removeItem("_loket");
+            }
+
+            let loket = $('#loketAntrian').val();
+            if (loket != '') {
+                localStorage.setItem("_loket", loket);
+                window.location.href = "pages/panggilan"
+            } else {
+                alert("Silahkan pilih loket terlebih dahulu");
+            }
+        });
+    </script>
 </body>
 
 </html>

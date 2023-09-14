@@ -37,14 +37,13 @@
                 <!-- judul halaman -->
                 <div class="d-flex align-items-center me-md-auto">
                     <i class="bi-mic-fill text-success me-3 fs-3"></i>
-                    <h1 class="h5 pt-2">Panggilan Antrian</h1>
+                    <h1 class="h5 pt-2">Panggilan Antrian <span class="namaLoket"></span></h1>
                 </div>
                 <!-- breadcrumbs -->
                 <div class="ms-5 ms-md-0 pt-md-3 pb-md-0">
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/"><i class="bi-house-fill text-success"></i></a></li>
-                            <li class="breadcrumb-item" aria-current="page">Dashboard</li>
+                            <li class="breadcrumb-item"><a href="/aplikasi-antrian"><i class="bi-house-fill text-success"></i></a></li>
                             <li class="breadcrumb-item" aria-current="page">Antrian</li>
                         </ol>
                     </nav>
@@ -141,13 +140,10 @@
         <div class="container">
             <hr class="my-4">
             <!-- copyright -->
-            <div class="copyright text-center mb-2 mb-md-0">&copy; <?php date('Y') ?> - <a href="https://adeofficial.com" target="_blank" class="text-brand text-decoration-none">Ade Official</a>. All rights reserved.
+            <div class="copyright text-center mb-2 mb-md-0">&copy; <?php date('Y') ?> - <a href="https://paperlesshospital.id" target="_blank" class="text-brand text-decoration-none">paperlesshospital.id</a>. All rights reserved.
             </div>
         </div>
     </footer>
-
-    <!-- load file audio bell antrian -->
-    <audio id="tingtung" src="../../assets/audio/tingtung.mp3"></audio>
 
     <!-- jQuery Core -->
     <script src="../../assets/vendor/js/jquery-3.6.0.min.js" type="text/javascript"></script>
@@ -159,11 +155,20 @@
     <!-- DataTables -->
     <script src="../../assets/vendor/js/datatables.min.js" type="text/javascript"></script>
     <!-- Responsivevoice -->
-    <!-- Get API Key -> https://responsivevoice.org/ -->
-    <script src="../../assets/vendor/js/responsivevoice.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
+            // Koneksi websocket
+            var is_open = false;
+            var conn = new WebSocket('ws://localhost:8081');
+            conn.onopen = function(e) {
+                console.log("Connection established!");
+                is_open = true;
+            };
+
+
+            var loket = localStorage.getItem('_loket');
+            $(".namaLoket").html(' Loket ' + loket);
             // tampilkan informasi antrian
             $('#jumlah-antrian').load('get_jumlah_antrian.php');
             $('#antrian-sekarang').load('get_antrian_sekarang.php');
@@ -182,8 +187,8 @@
                         "orderable": false,
                         "searchable": false,
                         "className": 'text-center',
-                        render: function(data){
-                            return '<b>'+data+'</b>'
+                        render: function(data) {
+                            return '<b>' + data + '</b>'
                         }
                     },
                     {
@@ -228,25 +233,13 @@
                 var data = table.row($(this).parents('tr')).data();
                 // buat variabel untuk menampilkan data "id"
                 var id = data["id"];
-                // buat variabel untuk menampilkan audio bell antrian
-                var bell = document.getElementById('tingtung');
 
-                // mainkan suara bell antrian
-                bell.pause();
-                bell.currentTime = 0;
-                bell.play();
-
-                // set delay antara suara bell dengan suara nomor antrian
-                durasi_bell = bell.duration * 770;
-
-                // mainkan suara nomor antrian
-                setTimeout(function() {
-                    responsiveVoice.speak("Nomor Antrian, " + data["no_antrian"] + ", menuju, loket, 1", "Indonesian Female", {
-                        rate: 0.9,
-                        pitch: 1,
-                        volume: 1
-                    });
-                }, durasi_bell);
+                if (is_open) {
+                    conn.send(JSON.stringify({
+                        no_antrian: data["no_antrian"],
+                        loket: loket
+                    }));
+                }
 
                 // proses update data
                 $.ajax({

@@ -8,10 +8,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     // ambil tanggal sekarang
     $tanggal = gmdate("Y-m-d", time() + 60 * 60 * 7);
 
-    // sql statement untuk menampilkan jumlah data dari tabel "tbl_antrian" berdasarkan "tanggal" dan "status = 0"
-    $query = mysqli_query($mysqli, "SELECT count(id) as jumlah FROM tbl_antrian 
-                                    WHERE tanggal='$tanggal' AND status='0'")
-                                    or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
+    // sql statement untuk menampilkan jumlah data dari tabel "queue_antrian_admisi" berdasarkan "tanggal" dan "status = 0"
+    $query = mysqli_query($mysqli, "SELECT count(id) as jumlah FROM queue_antrian_admisi WHERE tanggal='$tanggal' AND status='0'") or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
     // ambil data hasil query
     $data = mysqli_fetch_assoc($query);
     // buat variabel untuk menampilkan data
