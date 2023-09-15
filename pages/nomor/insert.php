@@ -1,4 +1,10 @@
 <?php
+// Mengatasi CORS
+header('Access-Control-Allow-Origin: ' . $_ENV['FRONTEND_URL']);
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: HEAD, DELETE, POST, PUT, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Expose-Headers: Authorization');
 require 'cetak.php';
 // pengecekan ajax request untuk mencegah direct access file, agar file tidak bisa diakses secara langsung dari browser
 // jika ada ajax request
