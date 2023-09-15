@@ -84,14 +84,25 @@ function hariIndo($hariInggris)
             return 'hari tidak valid';
     }
 }
+
+require_once "../../config/database.php";
+$query = mysqli_query($mysqli, "SELECT * FROM queue_setting ORDER BY id DESC LIMIT 1") or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
+// ambil jumlah baris data hasil query
+$rows = mysqli_num_rows($query);
+
+if ($rows <> 0) {
+    $data = mysqli_fetch_assoc($query);
+} else {
+    $data = [];
+}
 ?>
 
-<body class="d-flex flex-column" style="background-color:#6B5935;">
-    <header style="background-color:#6B5935;" class="d-flex flex-wrap justify-content-center align-items-center py-3 px-5  border-bottom">
+<body class="d-flex flex-column" style="background-color:<?= $data['warna_background'] ? $data['warna_background'] : '#6B5935' ?>;">
+    <header style="background-color:<?= $data['warna_primary'] ? $data['warna_primary'] : '#6B5935' ?>;" class="d-flex flex-wrap justify-content-center align-items-center py-3 px-5  border-bottom">
         <a href="#" class="d-flex gap-3 align-items-center mb-3 mb-md-0 me-md-auto  text-decoration-none">
-            <span style="color:#fff;" class="fs-4 fw-bold">Monitor Antrian Pendaftaran</span>
+            <span style="color:<?= $data['warna_text'] ? $data['warna_text'] : '#fff' ?>;" class="fs-4 fw-bold">Monitor Antrian Pendaftaran</span>
         </a>
-        <ul class="nav nav-pills fs-4" style="color:#fff ">
+        <ul class="nav nav-pills fs-4" style="color:<?= $data['warna_text'] ? $data['warna_text'] : '#fff' ?> ">
             <li class="nav-item me-5">
                 <i class="far fa-calendar-alt me-3"></i>
                 <span id="date"><?= hariIndo(date('l')) . " " . strftime('%d %B %Y', $hariIni->getTimestamp()); ?></span>
@@ -103,18 +114,18 @@ function hariIndo($hariInggris)
         </ul>
     </header>
 
-    <main class="px-5 overflow-auto my-2" style="color:#ffff;">
+    <main class="px-5 overflow-auto my-2" style="color:<?= $data['warna_text'] ? $data['warna_text'] : '#fff' ?>;">
         <div class="text-dark overflow-auto">
             <div class="card mt-2 card-blur">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-1">
-                            <img class="img-fluid d-block mx-auto" src="../../assets/img/logo.png" alt="Image" class="mr-3" style="max-width: 70px;">
+                            <img class="img-fluid d-block mx-auto" src="<?= $data['logo'] && file_exists('../../assets/img/' . $data['logo']) ? '../../assets/img/' . $data['logo'] : '../../assets/img/default.png' ?>" alt="Image" class="mr-3" style="max-width: 70px;">
                         </div>
                         <div class="col-10 text-center text-white">
-                            <h4 class="card-title">RSUD BATIN MANGUNANG</h4>
-                            <h6 class="card-text">Jl. Soekarno Hatta, Komplek Islamic Centre, Kota Agung, Kab.Tanggamus, Prov. Lampung</h6>
-                            <p class="card-text">Tlp. 0821-7724-4406, Email. pengaduanrsudbatinmangunang@gmail.com
+                            <h4 class="card-title"><?= $data['nama_instansi'] ? $data['nama_instansi'] : ''; ?></h4>
+                            <h6 class="card-text"><?= $data['alamat'] ? $data['alamat'] : ''; ?></h6>
+                            <p class="card-text">Tlp. <?= $data['telpon'] ? $data['telpon'] : ''; ?>, Email. <?= $data['email'] ? $data['email'] : ''; ?>
                             </p>
                         </div>
                     </div>
@@ -163,9 +174,9 @@ function hariIndo($hariInggris)
             </div>
         </div>
     </main>
-    <footer class="overflow-hidden position-absolute w-100 bottom-0 p-2" style="background-color:#401af0;color:#19fd07;font-size:0.7rem;">
+    <footer class="overflow-hidden position-absolute w-100 bottom-0 p-2" style="background-color: <?= $data['warna_primary'] ? $data['warna_primary'] : '#fff' ?>;color:<?= $data['warna_text'] ? $data['warna_text'] : '#fff' ?>;font-size:0.7rem;">
         <h5 class="scroll-horizontal">
-            <marquee behavior="left" direction="left"><b>SELAMAT DATANG DI RSUD BATIN MANGUNANG, KOTA AGUNG KAB. TANGGAMUS</b></marquee>
+            <marquee behavior="left" direction="left"><b><?= $data['running_text'] ? $data['running_text'] : ''; ?></b></marquee>
         </h5>
         <div class="text-center">
             copyright &copy; <?= date('Y') ?> by Paperless Hospital

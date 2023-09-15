@@ -30,11 +30,23 @@
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
         <div class="container">
+            <?php
+            require_once "config/database.php";
+            $query = mysqli_query($mysqli, "SELECT * FROM queue_setting ORDER BY id DESC LIMIT 1") or die('Ada kesalahan pada query tampil data : ' . mysqli_error($mysqli));
+            // ambil jumlah baris data hasil query
+            $rows = mysqli_num_rows($query);
+
+            if ($rows <> 0) {
+                $data = mysqli_fetch_assoc($query);
+            } else {
+                $data = [];
+            }
+            ?>
             <!-- tampilkan pesan selamat datang -->
             <div class="alert alert-light mb-3 mt-3" role="alert">
                 <div class="text-center">
-                    <img src="assets/img/logo.png" alt="Logo" width="60px" class="">
-                    <h6 class="mt-2">Aplikasi Antrian RSUD Batin Mangunang</h6>
+                    <img src="<?= $data['logo'] && file_exists('assets/img/' . $data['logo']) ? 'assets/img/' . $data['logo'] : 'assets/img/default.png' ?>" alt="Logo" width="60px" class="">
+                    <h6 class="mt-2"><?= $data['nama_instansi'] ? $data['nama_instansi'] : ''; ?></h6>
                     <p>
                         <small>Silahkan pilih halaman yang ingin ditampilkan</small>
                     </p>
@@ -137,7 +149,7 @@
     <footer class="footer mt-auto py-4">
         <div class="container">
             <!-- copyright -->
-            <div class="copyright text-center mb-2 mb-md-0">&copy; <?php date('Y') ?> - <a href="https://adeofficial.com" target="_blank" class="text-brand text-decoration-none">Ade Official</a>. All rights reserved.
+            <div class="copyright text-center mb-2 mb-md-0">&copy; <?php date('Y') ?> - <a href="https://paperlesshospital.id" target="_blank" class="text-brand text-decoration-none">paperlesshospital.id</a>. All rights reserved.
             </div>
         </div>
     </footer>
