@@ -130,10 +130,12 @@
                     <div class="modal-body">
                         <select class="form-select" id="loketAntrian">
                             <option value="" selected>Pilih Loket Antrian</option>
-                            <option value="1">Loket 1</option>
-                            <option value="2">Loket 2</option>
-                            <option value="3">Loket 3</option>
-                            <option value="4">Loket 4</option>
+                            <?php $loket = json_decode($data['list_loket'], true); ?>
+                            <?php if (count($loket) > 0) : ?>
+                                <?php foreach ($loket as $lk) : ?>
+                                    <option value="<?= $lk['no_loket']; ?>"><?= $lk['nama_loket']; ?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </select>
                     </div>
                     <div class="modal-footer">

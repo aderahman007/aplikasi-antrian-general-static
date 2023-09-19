@@ -10,7 +10,7 @@
         try {
             // Enter the share name for your USB printer here
             // $connector = "MacBook-Pro.local";
-            $connector = new WindowsPrintConnector("POS-80");
+            $connector = new WindowsPrintConnector("smb://192.168.1.38/pos-80");
 
             /* Print a "Hello world" receipt" */
             $printer = new Printer($connector);

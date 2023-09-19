@@ -135,7 +135,7 @@ if ($rows <> 0) {
 
         <div class="d-flex mt-3 vh-100">
             <div style="width:65%;" class="d-flex rounded justify-content-center">
-                <iframe class="rounded" width="100%" height="450" allow="autoplay" src="https://www.youtube.com/embed/U7luoXkcXrg?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=1&loop=1&autoplay=1&playlist=U7luoXkcXrg">
+                <iframe class="rounded" width="100%" height="450" allow="autoplay" src="https://www.youtube.com/embed/<?= $data['youtube_id'] ? $data['youtube_id'] : ''; ?>?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=1&loop=1&autoplay=1&playlist=<?= $data['youtube_id'] ? $data['youtube_id'] : ''; ?>">
                 </iframe>
             </div>
             <div style="width:35%" class="h-100 overflow-hidden scroll-container" style="font-size:0.8em;">
@@ -216,6 +216,7 @@ if ($rows <> 0) {
                 $('#antrian-selanjutnya').load('../panggilan/get_antrian_selanjutnya.php').fadeIn("slow");
             }, 1000);
 
+            // Ubah alamat ip websocket
             var conn = new WebSocket('ws://localhost:8081');
             conn.onopen = function(e) {
                 console.log("Connection established!");

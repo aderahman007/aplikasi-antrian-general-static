@@ -1,14 +1,14 @@
 <?php
 // Mengatasi CORS
-header('Access-Control-Allow-Origin: ' . $_ENV['FRONTEND_URL']);
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Methods: HEAD, DELETE, POST, PUT, GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header('Access-Control-Expose-Headers: Authorization');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, x-requested-with, Content-Type, Accept, Access-Control-Request-Method");
+header('Access-Control-Allow-Methods: GET, POST');
+header("Allow: GET, POST");
 require 'cetak.php';
 // pengecekan ajax request untuk mencegah direct access file, agar file tidak bisa diakses secara langsung dari browser
 // jika ada ajax request
-if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     // panggil file "database.php" untuk koneksi ke database
     require_once "../../config/database.php";
 
