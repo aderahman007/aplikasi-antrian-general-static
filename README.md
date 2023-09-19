@@ -45,5 +45,8 @@ Halaman Setting Aplikasi Antrian untuk memudahkan dalam configurasi aplikasi sep
 - Ubah alamat WebSocket sesuai dengan alamat ip komputer server pada **pages/monitor/index.php Line 220**, **pages/panggilan/index.php Line 165**
 - Jalankan Server WebSocket pada root project dengan perintah **php server.php** (Command ini jangan di close)
 - Akses aplikasi antrian
+- Login default static Setting Aplikasi Antrian
+    Username : superadmin
+    Password : superadmin@123
 
 #### Script MIT Lisence By Ade Rahman
