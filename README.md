@@ -10,6 +10,7 @@ Aplikasi Antrian merupakan sistem manajemen yang digunakan untuk mengelola antri
 - Menggunakan framework CSS **Bootstrap 5** untuk membuat desain tampilan aplikasi.
 - Menggunakan **jQuery AJAX** untuk proses CRUD.
 - Menggunakan API teks berbicara dalam bahasa Indonesia dari **ResponsiveVoice.JS** untuk suara panggilan antrian.
+- Menggunakan Rachet PHP WebSocket untuk server listener panggilan suara pada monitor dashboard antrian
 
 # Fitur Apilkasi
 
