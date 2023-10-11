@@ -51,4 +51,4 @@ Halaman Setting Aplikasi Antrian untuk memudahkan dalam configurasi aplikasi sep
     Username : superadmin
     Password : superadmin@123
 
-#### Script MIT Lisence By Ade Rahman
+#### Script MIT Lisence 
