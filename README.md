@@ -9,7 +9,9 @@ Aplikasi Antrian merupakan sistem manajemen yang digunakan untuk mengelola antri
 - Menggunakan **MySQLi Extension** untuk berkomunikasi dengan database.
 - Menggunakan framework CSS **Bootstrap 5** untuk membuat desain tampilan aplikasi.
 - Menggunakan **jQuery AJAX** untuk proses CRUD.
-- Menggunakan API teks berbicara dalam bahasa Indonesia dari **ResponsiveVoice.JS** untuk suara panggilan antrian.
+- Menggunakan **API** teks berbicara dalam bahasa Indonesia dari **ResponsiveVoice.JS** untuk suara panggilan antrian.
+- Menggunakan **Rachet PHP WebSocket** untuk server listener panggilan suara pada monitor dashboard antrian.
+- Menggunakan **Mike42/EscPrinter** untuk print struck antrian 
 
 # Fitur Apilkasi
 
@@ -17,7 +19,7 @@ Aplikasi Antrian ini terdiri dari 4 interface, yaitu **Nomor Antrian**, **Panggi
 
 ### 1. Nomor Antrian
 
-Halaman Nomor Antrian digunakan pengunjung untuk mengambil nomor antrian. Fitur ini bisa Kamu kembangkan lagi dengan menambahkan fungsi cetak nomor antrian secara langsung ke printer, atau memberikan nomor antrian secara online.
+Halaman Nomor Antrian digunakan pengunjung untuk mengambil nomor antrian. Fitur ini bisa Kamu kembangkan lagi dengan menambahkan fungsi cetak nomor antrian secara langsung ke printer POS 88Cm.
 
 ### 2. Panggilan Antrian
 
@@ -47,4 +49,4 @@ Halaman Setting Aplikasi Antrian untuk memudahkan dalam configurasi aplikasi sep
     Username : superadmin
     Password : superadmin@123
 
-#### Script MIT Lisence By Ade Rahman
+#### Script MIT Lisence 
