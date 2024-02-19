@@ -146,7 +146,7 @@ if ($rows <> 0) {
                             <div class="card-body">
                                 <h1 id="antrian-sekarang" class="text-center fw-bold" style="font-size: 100px;">-</h1>
                             </div>
-                            <h5 class="card-footer text-bold namaLoketMonitor"></h5>
+                            <h5 class="card-footer text-bold namaLoketMonitor">-</h5>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mt-3">
@@ -259,8 +259,9 @@ if ($rows <> 0) {
             // auto reload data antrian setiap 1 detik untuk menampilkan data secara realtime
             setInterval(function() {
                 $('#jumlah-antrian').load('../panggilan/get_jumlah_antrian.php').fadeIn("slow");
-                $('#antrian-sekarang').load('../panggilan/get_antrian_sekarang.php').fadeIn(1000);
+                // $('#antrian-sekarang').load('../panggilan/get_antrian_sekarang.php').fadeIn(1000);
                 $("#antrian-sekarang").fadeOut(800);
+                $("#antrian-sekarang").fadeIn(800);
                 $('#antrian-selanjutnya').load('../panggilan/get_antrian_selanjutnya.php').fadeIn("slow");
                 get_panggilan();
             }, 1000);
