@@ -270,6 +270,7 @@ if ($rows <> 0) {
                     queuePanggil.forEach((value, index) => {
                         if (!isPlay) {
                             isPlay = true;
+                            $("#antrian-sekarang").html(value.antrian);
                             $(".namaLoketMonitor").html("LOKET " + value.loket);
                             // mainkan suara bell antrian
                             bell.currentTime = 0;
