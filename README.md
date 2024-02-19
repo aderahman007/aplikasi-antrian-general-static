@@ -42,8 +42,6 @@ Halaman Setting Aplikasi Antrian untuk memudahkan dalam configurasi aplikasi sep
 
 ## Configurasi
 - Jalankan **composes install**
-- Ubah alamat WebSocket sesuai dengan alamat ip komputer server pada **pages/monitor/index.php Line 220**, **pages/panggilan/index.php Line 165**
-- Jalankan Server WebSocket pada root project dengan perintah **php server.php** (Command ini jangan di close)
 - Akses aplikasi antrian
 - Login default static Setting Aplikasi Antrian
     Username : superadmin

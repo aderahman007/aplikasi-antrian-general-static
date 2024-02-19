@@ -133,39 +133,33 @@ if ($rows <> 0) {
             </div>
         </div>
 
-        <div class="d-flex mt-3 vh-100">
+        <div class="d-flex justify-content-between mt-3 vh-100">
             <div style="width:65%;" class="d-flex rounded justify-content-center">
                 <iframe class="rounded" width="100%" height="450" allow="autoplay" src="https://www.youtube.com/embed/<?= $data['youtube_id'] ? $data['youtube_id'] : ''; ?>?rel=0&modestbranding=1&autohide=1&mute=0&showinfo=0&controls=1&loop=1&autoplay=1&playlist=<?= $data['youtube_id'] ? $data['youtube_id'] : ''; ?>">
                 </iframe>
             </div>
             <div style="width:35%" class="h-100 overflow-hidden scroll-container" style="font-size:0.8em;">
                 <div class="h-auto d-flex flex-column scroll-content">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card text-center text-white bg-info" style="margin-left:15px;">
-                                <h5 class="card-header">NOMOR ANTRIAN SEKARANG</h5>
-                                <div class="card-body">
-                                    <h1 id="antrian-sekarang" class="text-center fw-bold" style="font-size: 100px;">-</h1>
-                                </div>
-                                <h5 class="card-footer text-bold namaLoketMonitor"></h5>
+                    <div class="d-flex justify-content-center">
+                        <div class="card text-center text-white bg-info w-100" style="margin-left:15px;">
+                            <h5 class="card-header">NOMOR ANTRIAN SEKARANG</h5>
+                            <div class="card-body">
+                                <h1 id="antrian-sekarang" class="text-center fw-bold" style="font-size: 100px;">-</h1>
                             </div>
+                            <h5 class="card-footer text-bold namaLoketMonitor"></h5>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-6">
-                            <div class="card text-center text-white bg-warning" style="margin-left:15px;">
-                                <h5 class="card-header">ANTRIAN SELANJUTNYA</h5>
-                                <div class="card-body">
-                                    <h1 id="antrian-selanjutnya" class="text-center fw-bold my-3" style="font-size: 80px;">-</h1>
-                                </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="card text-center text-white bg-warning w-50" style="margin-left:15px;">
+                            <h6 class="card-header">ANTRIAN SELANJUTNYA</h6>
+                            <div class="card-body">
+                                <h1 id="antrian-selanjutnya" class="text-center fw-bold my-3" style="font-size: 80px;">-</h1>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="card text-center text-white bg-primary" style="margin-left:15px;">
-                                <h5 class="card-header">TOTAL ANTRIAN</h5>
-                                <div class="card-body">
-                                    <h1 id="jumlah-antrian" class="text-center fw-bold my-3" style="font-size: 80px;">-</h1>
-                                </div>
+                        <div class="card text-center text-white bg-primary w-50" style="margin-left:15px;">
+                            <h6 class="card-header">TOTAL ANTRIAN</h6>
+                            <div class="card-body">
+                                <h1 id="jumlah-antrian" class="text-center fw-bold my-3" style="font-size: 80px;">-</h1>
                             </div>
                         </div>
                     </div>
@@ -204,9 +198,63 @@ if ($rows <> 0) {
             var currentPanggil = 0;
             var isPlay = false;
 
+            const checkQueuePanggil = (key, arrayOfQueue) => {
+                var result = false;
+                for (let i = 0; i < arrayOfQueue.length; i++) {
+                    if (arrayOfQueue[i].id === key) {
+                        result = true;
+                    }
+                }
+
+                return result;
+            }
+
+            const get_panggilan = () => {
+                $.ajax({
+                    url: 'get_panggilan.php',
+                    method: 'POST',
+                    async: false,
+                    cache: false,
+                    dataType: 'json',
+                    success: function(result) {
+                        console.log(result);
+                        if (result.success == true) {
+                            if (result.data.length > 0) {
+                                result.data.forEach(function(element, index) {
+                                    if (checkQueuePanggil(element.id, queuePanggil)) {
+                                        return;
+                                    }
+                                    queuePanggil.push(element);
+                                    if (!isPlay) {
+                                        panggilAntrian();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+
+            const delete_panggilan = (id) => {
+                $.ajax({
+                    url: 'delete_panggilan.php',
+                    method: 'POST',
+                    data: {
+                        id: id
+                    },
+                    async: false,
+                    cache: false,
+                    dataType: 'json',
+                    success: function(result) {
+                        console.log(result.message);
+                    }
+                });
+            }
+
             $('#jumlah-antrian').load('../panggilan/get_jumlah_antrian.php');
             $('#antrian-sekarang').load('../panggilan/get_antrian_sekarang.php');
             $('#antrian-selanjutnya').load('../panggilan/get_antrian_selanjutnya.php');
+            get_panggilan();
 
             // auto reload data antrian setiap 1 detik untuk menampilkan data secara realtime
             setInterval(function() {
@@ -214,22 +262,8 @@ if ($rows <> 0) {
                 $('#antrian-sekarang').load('../panggilan/get_antrian_sekarang.php').fadeIn(1000);
                 $("#antrian-sekarang").fadeOut(800);
                 $('#antrian-selanjutnya').load('../panggilan/get_antrian_selanjutnya.php').fadeIn("slow");
+                get_panggilan();
             }, 1000);
-
-            // Ubah alamat ip websocket
-            var conn = new WebSocket('ws://localhost:8081');
-            conn.onopen = function(e) {
-                console.log("Connection established!");
-            };
-
-            conn.onmessage = function(e) {
-                let panggil = JSON.parse(e.data);
-                queuePanggil.push(panggil);
-                console.log(queuePanggil);
-                if (!isPlay) {
-                    panggilAntrian();
-                }
-            };
 
             function panggilAntrian() {
                 if (queuePanggil.length > 0) {
@@ -247,13 +281,14 @@ if ($rows <> 0) {
 
                             // mainkan suara nomor antrian
                             setTimeout(function() {
-                                responsiveVoice.speak("Nomor Antrian, " + value.no_antrian + ", menuju, loket, " + value.loket, "Indonesian Female", {
+                                responsiveVoice.speak("Nomor Antrian, " + value.antrian + ", menuju, loket, " + value.loket, "Indonesian Female", {
                                     rate: 0.9,
                                     pitch: 1,
                                     volume: 1,
                                     onend: () => {
                                         queuePanggil.splice(index, 1);
                                         isPlay = false;
+                                        delete_panggilan(value.id);
                                         if (queuePanggil.length > 0) {
                                             panggilAntrian();
                                         }

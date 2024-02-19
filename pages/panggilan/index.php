@@ -158,17 +158,6 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            // Koneksi websocket
-            var is_open = false;
-            
-            // Ubah alamat ip websocket
-            var conn = new WebSocket('ws://localhost:8081');
-            conn.onopen = function(e) {
-                console.log("Connection established!");
-                is_open = true;
-            };
-
-
             var loket = localStorage.getItem('_loket');
             $(".namaLoket").html(' Loket ' + loket);
             // tampilkan informasi antrian
@@ -236,12 +225,22 @@
                 // buat variabel untuk menampilkan data "id"
                 var id = data["id"];
 
-                if (is_open) {
-                    conn.send(JSON.stringify({
-                        no_antrian: data["no_antrian"],
+                // proses create panggilan antrian
+                $.ajax({
+                    url: "create_panggilan.php", // url file proses update data
+                    type: "POST", // mengirim data dengan method POST
+                    // tentukan data yang dikirim
+                    dataType: 'json',
+                    data: {
+                        antrian: data["no_antrian"],
                         loket: loket
-                    }));
-                }
+                    },
+                    async: false,
+                    cache: false,
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
 
                 // proses update data
                 $.ajax({

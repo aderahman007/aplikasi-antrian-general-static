@@ -3,15 +3,15 @@
 
  Source Server         : Mysql
  Source Server Type    : MySQL
- Source Server Version : 50734 (5.7.34)
+ Source Server Version : 50739 (5.7.39)
  Source Host           : localhost:3306
  Source Schema         : aplikasi_antrian
 
  Target Server Type    : MySQL
- Target Server Version : 50734 (5.7.34)
+ Target Server Version : 50739 (5.7.39)
  File Encoding         : 65001
 
- Date: 15/09/2023 14:12:33
+ Date: 20/02/2024 00:05:45
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `queue_antrian_admisi` (
   `status` enum('1','0') NOT NULL DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of queue_antrian_admisi
@@ -73,6 +73,36 @@ INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `up
 INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (37, '2023-09-14', '027', '1', '2023-09-14 23:18:45');
 INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (38, '2023-09-14', '028', '1', '2023-09-14 23:18:49');
 INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (39, '2023-09-14', '029', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (40, '2023-09-16', '001', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (41, '2023-09-16', '002', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (42, '2023-09-16', '003', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (43, '2023-09-16', '004', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (44, '2023-09-16', '005', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (45, '2023-09-19', '001', '1', '2023-09-19 23:34:53');
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (46, '2023-09-19', '002', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (47, '2023-10-25', '001', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (48, '2023-11-09', '001', '1', '2023-11-09 20:42:11');
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (49, '2023-11-09', '002', '1', '2023-11-09 20:43:21');
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (50, '2023-11-09', '003', '0', NULL);
+INSERT INTO `queue_antrian_admisi` (`id`, `tanggal`, `no_antrian`, `status`, `updated_date`) VALUES (51, '2024-02-01', '001', '0', NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for queue_penggilan_antrian
+-- ----------------------------
+DROP TABLE IF EXISTS `queue_penggilan_antrian`;
+CREATE TABLE `queue_penggilan_antrian` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `antrian` varchar(255) DEFAULT NULL,
+  `loket` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Fk_antrian` (`antrian`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of queue_penggilan_antrian
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 -- ----------------------------
@@ -101,7 +131,7 @@ CREATE TABLE `queue_setting` (
 -- Records of queue_setting
 -- ----------------------------
 BEGIN;
-INSERT INTO `queue_setting` (`id`, `nama_instansi`, `logo`, `alamat`, `telpon`, `email`, `running_text`, `youtube_id`, `list_loket`, `warna_primary`, `warna_secondary`, `warna_accent`, `warna_background`, `warna_text`) VALUES (1, 'RSUD BATIN MANGUNANG', 'Lambang_Kabupaten_Tanggamus.png', 'Lorhbh', '558450845', 'ade2mail.com', 'SELAMAT DATANG DI RSUD BATIN MANGUNANG, KOTA AGUNG KAB. TANGGAMUS', 'hbjshfjssfs', '[{\"no_loket\":\"1\",\"nama_loket\":\"Loket 1\"},{\"no_loket\":\"2\",\"nama_loket\":\"Loket 2\"},{\"no_loket\":\"3\",\"nama_loket\":\"Loket 3\"}]', '#00923f', '#c39292', '#6083a9', '#3a9862', '#ffffff');
+INSERT INTO `queue_setting` (`id`, `nama_instansi`, `logo`, `alamat`, `telpon`, `email`, `running_text`, `youtube_id`, `list_loket`, `warna_primary`, `warna_secondary`, `warna_accent`, `warna_background`, `warna_text`) VALUES (1, 'RSU SRIWIJAYA', 'logo-removebg-preview.png', 'Lorhbh', '558450845', 'ade2mail.com', 'SELAMAT DATANG DI RSU SRIWIJAYA', 'Dfzmsb_57XM', '[{\"no_loket\":\"1\",\"nama_loket\":\"Loket 1\"},{\"no_loket\":\"2\",\"nama_loket\":\"Loket 2\"},{\"no_loket\":\"3\",\"nama_loket\":\"Loket 3\"}]', '#00923f', '#c39292', '#6083a9', '#3a9862', '#ffffff');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
