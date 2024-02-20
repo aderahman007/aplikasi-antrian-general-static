@@ -48,5 +48,8 @@ Halaman Setting Aplikasi Antrian untuk memudahkan dalam configurasi aplikasi sep
 - Login default static Setting Aplikasi Antrian
     Username : superadmin
     Password : superadmin@123
+  
+# Support me
+Donation to give me a Gift [Saweria.co](https://saweria.co/aderahman007) : https://saweria.co/aderahman007
 
 #### Script MIT Lisence 
