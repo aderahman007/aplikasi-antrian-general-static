@@ -50,7 +50,7 @@ Halaman Setting Aplikasi Antrian untuk memudahkan dalam configurasi aplikasi sep
     Password : superadmin@123
   
 # Support me
-Donation to give me a Gift
+Donation to give me a Gift   
 Saweria : https://saweria.co/aderahman007
 
 #### Script MIT Lisence 
